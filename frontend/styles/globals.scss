@@ -1,144 +1,398 @@
-@import 'variables';
-@import 'mixins';
+@use 'variables' as *;
+@use 'mixins' as *;
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+// — Google Fonts Import
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-html { font-size: 16px; scroll-behavior: smooth; }
+// — Reset & Base
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
 
 body {
-  font-family: $font-primary;
-  background: $bg-primary;
+  background: $bg-base;
   color: $text-primary;
-  min-height: 100vh;
+  font-family: $font-sans;
+  font-size: $font-base;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @include scrollbar;
 }
 
-a { color: $accent-red; text-decoration: none; transition: color 0.2s; &:hover { color: $accent-red-light; } }
-
-scrollbar-width: thin;
-scrollbar-color: $accent-red $bg-secondary;
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: $bg-secondary; }
-::-webkit-scrollbar-thumb { background: $accent-red; border-radius: 3px; }
-
-.container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
-
-.card {
-  background: $bg-card;
-  border: 1px solid $border-color;
-  border-radius: $radius-lg;
-  padding: 1.5rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  &:hover { border-color: $accent-red; box-shadow: $shadow-red; }
+a {
+  color: $primary;
+  text-decoration: none;
+  &:hover { color: $primary-light; }
 }
 
+img { max-width: 100%; height: auto; display: block; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+// — Keyframe Animations
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(0, 200, 83, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 5px $primary-glow; }
+  50%       { box-shadow: 0 0 20px $primary-glow, 0 0 40px $primary-glow; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+// — Utility Classes
+.animate-fade-in     { animation: fadeIn 0.3s ease forwards; }
+.animate-slide-left  { animation: slideInLeft 0.3s ease forwards; }
+.animate-spin        { animation: spin 1s linear infinite; }
+.animate-glow        { animation: glowPulse 2s ease infinite; }
+
+.text-primary   { color: $text-primary !important; }
+.text-secondary { color: $text-secondary !important; }
+.text-muted     { color: $text-muted !important; }
+.text-accent    { color: $primary !important; }
+.text-success   { color: $success !important; }
+.text-warning   { color: $warning !important; }
+.text-danger    { color: $danger !important; }
+
+.bg-card     { background: $bg-card; }
+.bg-surface  { background: $bg-surface; }
+
+.truncate { @include truncate; }
+
+// — Skeleton loader
+.skeleton {
+  background: linear-gradient(90deg, $bg-elevated 25%, $bg-card 50%, $bg-elevated 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: $radius-md;
+}
+
+// — Scrollbar global
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: $bg-surface; }
+::-webkit-scrollbar-thumb {
+  background: $border-color;
+  border-radius: $radius-full;
+  &:hover { background: $primary; }
+}
+
+// — Status badges
 .badge {
   display: inline-flex; align-items: center; gap: 4px;
-  padding: 2px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
-  &.success { background: rgba($success,0.15); color: $success; }
-  &.danger  { background: rgba($danger,0.15);  color: $danger;  }
-  &.warning { background: rgba($warning,0.15); color: $warning; }
-  &.info    { background: rgba($info,0.15);    color: $info;    }
-  &.red     { background: rgba($accent-red,0.15); color: $accent-red; }
+  padding: 2px 10px; border-radius: $radius-full;
+  font-size: $font-xs; font-weight: $font-medium;
+
+  &--success { @include badge($success-bg, $success); }
+  &--warning { @include badge($warning-bg, $warning); }
+  &--danger  { @include badge($danger-bg, $danger); }
+  &--info    { @include badge($info-bg, $info); }
+  &--default { @include badge(rgba(255,255,255,0.06), $text-secondary); }
 }
 
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 0.5rem 1.25rem; border-radius: $radius-md; font-size: 0.875rem;
-  font-weight: 600; cursor: pointer; border: none; transition: all 0.2s;
-  &-primary   { background: $accent-red;     color: #fff; &:hover { background: $accent-red-dark; box-shadow: $shadow-red; } }
-  &-secondary { background: $bg-secondary;   color: $text-primary; border: 1px solid $border-color; &:hover { border-color: $accent-red; } }
-  &-ghost     { background: transparent;     color: $text-secondary; border: 1px solid $border-color; &:hover { color: $text-primary; border-color: $accent-red; } }
-  &-danger    { background: $danger;         color: #fff; &:hover { filter: brightness(1.1); } }
-  &-success   { background: $success;        color: #fff; &:hover { filter: brightness(1.1); } }
-  &-sm        { padding: 0.3rem 0.8rem; font-size: 0.8rem; }
-  &-lg        { padding: 0.75rem 2rem; font-size: 1rem; }
-  &:disabled  { opacity: 0.5; cursor: not-allowed; }
+// — Pulse dot
+.pulse-dot {
+  @include pulse-dot();
+  display: inline-block;
+  &.pulse-dot--red    { @include pulse-dot($primary); }
+  &.pulse-dot--yellow { @include pulse-dot($warning); }
 }
 
-.input-group {
-  display: flex; flex-direction: column; gap: 0.4rem;
-  label { font-size: 0.85rem; color: $text-secondary; font-weight: 500; }
-  input, select, textarea {
-    background: $bg-input; border: 1px solid $border-color; border-radius: $radius-md;
-    color: $text-primary; padding: 0.6rem 0.9rem; font-size: 0.9rem; width: 100%;
-    transition: border-color 0.2s, box-shadow 0.2s; outline: none; font-family: $font-primary;
-    &:focus { border-color: $accent-red; box-shadow: 0 0 0 3px rgba($accent-red, 0.15); }
-    &::placeholder { color: $text-muted; }
+// — Forms
+.form-group {
+  @include flex-col;
+  gap: $space-2;
+  margin-bottom: $space-5;
+  label {
+    font-size: $font-sm;
+    font-weight: $font-medium;
+    color: $text-secondary;
   }
-  textarea { resize: vertical; min-height: 80px; }
 }
 
-.table-wrapper { overflow-x: auto; border-radius: $radius-lg; border: 1px solid $border-color; }
-table { width: 100%; border-collapse: collapse;
-  th { background: $bg-secondary; color: $text-secondary; font-size: 0.8rem; font-weight: 600;
-       text-transform: uppercase; letter-spacing: 0.05em; padding: 0.75rem 1rem; text-align: left; }
-  td { padding: 0.85rem 1rem; border-top: 1px solid $border-color; color: $text-primary; font-size: 0.875rem; }
-  tr:hover td { background: rgba($accent-red, 0.03); }
+.input  { @include input-base; }
+.textarea {
+  @include input-base;
+  resize: vertical;
+  min-height: 100px;
+}
+.select {
+  @include input-base;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-4 center;
+  padding-right: $space-10;
 }
 
-.loading-spinner {
-  width: 40px; height: 40px; border: 3px solid $border-color;
-  border-top-color: $accent-red; border-radius: 50%; animation: spin 0.8s linear infinite;
-  &.sm { width: 20px; height: 20px; border-width: 2px; }
+// — Buttons
+.btn {
+  display: inline-flex; align-items: center; gap: $space-2;
+  padding: $space-3 $space-5;
+  border-radius: $radius-md;
+  font-size: $font-sm;
+  font-weight: $font-semibold;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all $transition-base;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &--primary   { @include btn-glow; }
+  &--secondary {
+    background: $bg-elevated;
+    color: $text-primary;
+    border-color: $border-color;
+    &:hover { border-color: $primary; background: $bg-card; }
+  }
+  &--ghost {
+    background: transparent;
+    color: $text-secondary;
+    &:hover { color: $text-primary; background: $bg-elevated; }
+  }
+  &--danger {
+    background: $danger-bg;
+    color: $danger;
+    border-color: rgba($danger, 0.3);
+    &:hover { background: $danger; color: #fff; }
+  }
+  &--sm { padding: $space-2 $space-4; font-size: $font-xs; }
+  &--lg { padding: $space-4 $space-8; font-size: $font-base; }
+  &--icon {
+    padding: $space-2;
+    width: 36px; height: 36px;
+    justify-content: center;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    &:hover { transform: none; box-shadow: none; }
+  }
 }
-@keyframes spin { to { transform: rotate(360deg); } }
 
-.pulse { animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-.glow-red { box-shadow: 0 0 20px rgba($accent-red, 0.4); }
-.text-gradient { background: linear-gradient(135deg, $accent-red, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-.page-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid $border-color;
-  h1 { font-size: 1.75rem; font-weight: 700; }
-  p { color: $text-secondary; font-size: 0.9rem; margin-top: 0.25rem; }
+// — Cards
+.card {
+  @include card;
+  &__header {
+    @include flex-between;
+    margin-bottom: $space-5;
+    padding-bottom: $space-4;
+    border-bottom: 1px solid $border-subtle;
+    &-title {
+      font-size: $font-lg;
+      font-weight: $font-semibold;
+      color: $text-primary;
+    }
+  }
+  &__body { }
+  &__footer {
+    margin-top: $space-5;
+    padding-top: $space-4;
+    border-top: 1px solid $border-subtle;
+  }
 }
 
-.stat-card {
-  background: $bg-card; border: 1px solid $border-color; border-radius: $radius-lg;
-  padding: 1.5rem; position: relative; overflow: hidden;
-  .stat-icon { width: 48px; height: 48px; border-radius: $radius-md;
-    display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1rem; }
-  .stat-value { font-size: 2rem; font-weight: 700; line-height: 1; }
-  .stat-label { color: $text-secondary; font-size: 0.85rem; margin-top: 0.25rem; }
-  .stat-change { font-size: 0.8rem; margin-top: 0.5rem;
-    &.up { color: $success; } &.down { color: $danger; } }
-  &::after { content: ''; position: absolute; top: -20px; right: -20px;
-    width: 80px; height: 80px; border-radius: 50%; background: rgba($accent-red,0.05); }
+// — Tables
+.table-wrapper {
+  overflow-x: auto;
+  @include scrollbar;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-sm;
+  th {
+    text-align: left;
+    padding: $space-3 $space-4;
+    background: $bg-elevated;
+    color: $text-muted;
+    font-weight: $font-medium;
+    font-size: $font-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid $border-color;
+    &:first-child { border-radius: $radius-md 0 0 0; }
+    &:last-child  { border-radius: 0 $radius-md 0 0; }
+  }
+  td {
+    padding: $space-3 $space-4;
+    border-bottom: 1px solid $border-subtle;
+    color: $text-secondary;
+    vertical-align: middle;
+  }
+  tr:hover td { background: $bg-elevated; }
+  tr:last-child td { border-bottom: none; }
 }
 
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
-  z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem;
+// — Modal
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: $bg-overlay;
+  backdrop-filter: blur(4px);
+  z-index: $z-modal;
+  @include flex-center;
+  animation: fadeIn 0.2s ease;
 }
 .modal {
-  background: $bg-card; border: 1px solid $border-color; border-radius: $radius-xl;
-  padding: 2rem; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;
-    h2 { font-size: 1.25rem; font-weight: 700; }
-    button { background: none; border: none; color: $text-muted; cursor: pointer; font-size: 1.2rem; &:hover { color: $text-primary; } }
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-xl;
+  padding: $space-8;
+  width: 90%; max-width: 540px;
+  box-shadow: $shadow-lg;
+  animation: fadeIn 0.25s ease;
+  &__header {
+    @include flex-between;
+    margin-bottom: $space-6;
+    h2 { font-size: $font-xl; font-weight: $font-semibold; }
+  }
+  &__close {
+    @extend .btn;
+    @extend .btn--icon;
+    @extend .btn--ghost;
+    color: $text-muted;
   }
 }
 
-.sidebar-nav-item {
-  display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1rem;
-  border-radius: $radius-md; color: $text-secondary; font-size: 0.875rem; font-weight: 500;
-  transition: all 0.2s; cursor: pointer; text-decoration: none;
-  .nav-icon { font-size: 1.1rem; flex-shrink: 0; }
-  .nav-badge { margin-left: auto; background: $accent-red; color: #fff; font-size: 0.7rem;
-    padding: 1px 7px; border-radius: 10px; font-weight: 700; }
-  &:hover, &.active { background: rgba($accent-red,0.1); color: $text-primary; border-left: 3px solid $accent-red; padding-left: calc(1rem - 3px); }
-  &.active { color: $accent-red; }
+// — Toast (react-hot-toast override)
+.go2072408551 {
+  background: $bg-card !important;
+  color: $text-primary !important;
+  border: 1px solid $border-color !important;
+  font-family: $font-sans !important;
 }
 
-.neon-border { border: 1px solid $accent-red; box-shadow: 0 0 8px rgba($accent-red,0.3), inset 0 0 8px rgba($accent-red,0.03); }
+// — Page wrapper
+.page {
+  animation: fadeIn 0.3s ease;
+  &__header {
+    @include flex-between;
+    margin-bottom: $space-8;
+    h1 {
+      font-size: $font-3xl;
+      font-weight: $font-bold;
+      background: linear-gradient(135deg, $text-primary 60%, $primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+}
 
-@media (max-width: 768px) {
-  .page-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-  .stat-card .stat-value { font-size: 1.5rem; }
+// — Stats grid
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: $space-5;
+  margin-bottom: $space-8;
+}
+.stat-card {
+  @include card($space-5);
+  &__icon {
+    width: 40px; height: 40px;
+    border-radius: $radius-md;
+    background: $primary-subtle;
+    border: 1px solid rgba($primary, 0.2);
+    @include flex-center;
+    color: $primary;
+    margin-bottom: $space-4;
+  }
+  &__label  { font-size: $font-sm; color: $text-muted; margin-bottom: $space-1; }
+  &__value  { font-size: $font-2xl; font-weight: $font-bold; color: $text-primary; }
+  &__trend  { font-size: $font-xs; color: $success; margin-top: $space-1; }
+}
+
+// — Divider
+.divider {
+  border: none;
+  border-top: 1px solid $border-subtle;
+  margin: $space-6 0;
+}
+
+// — Code block
+pre, code {
+  font-family: $font-mono;
+  font-size: $font-sm;
+  background: $bg-elevated;
+  border-radius: $radius-md;
+  border: 1px solid $border-subtle;
+}
+pre {
+  padding: $space-4;
+  overflow-x: auto;
+  @include scrollbar;
+}
+code { padding: 2px 6px; }
+
+// — Progress bar
+.progress {
+  width: 100%;
+  height: 6px;
+  background: $bg-elevated;
+  border-radius: $radius-full;
+  overflow: hidden;
+  &__bar {
+    height: 100%;
+    background: $primary;
+    border-radius: $radius-full;
+    transition: width $transition-slow;
+    &--success { background: $success; }
+    &--warning { background: $warning; }
+    &--danger  { background: $danger; }
+  }
+}
+
+// — Layout
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: $bg-base;
+
+  &__main {
+    flex: 1;
+    margin-left: $sidebar-width;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: margin-left $transition-base;
+    @include lg { margin-left: 0; }
+  }
+
+  &__content {
+    flex: 1;
+    padding: $space-8;
+    margin-top: $topbar-height;
+    @include md { padding: $space-5; }
+  }
 }

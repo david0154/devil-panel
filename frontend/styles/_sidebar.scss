@@ -1,220 +1,205 @@
-// ============================================
-// Devil Panel — Sidebar Navigation
-// ============================================
-@import 'variables';
-@import 'mixins';
+@use 'variables' as *;
+@use 'mixins' as *;
 
 .sidebar {
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  top: 0; left: 0;
   width: $sidebar-width;
-  background: $sidebar-bg;
-  border-right: 1px solid $border-default;
-  @include flex-col;
-  z-index: $z-sticky;
-  transition: width 0.3s ease;
-  @include custom-scrollbar;
+  height: 100vh;
+  background: $bg-surface;
+  border-right: 1px solid $border-color;
+  z-index: $z-sidebar;
+  display: flex;
+  flex-direction: column;
+  transition: width $transition-base, transform $transition-base;
+  @include scrollbar;
   overflow-y: auto;
   overflow-x: hidden;
 
-  &.collapsed {
+  &--collapsed {
     width: $sidebar-collapsed;
-
-    .nav-label, .logo-text, .sidebar-footer-text,
-    .nav-badge, .nav-section-title { display: none; }
-
-    .nav-item { justify-content: center; padding: $space-3; }
-    .nav-icon  { margin: 0; }
+    .sidebar__nav-label,
+    .sidebar__logo-text,
+    .sidebar__section-title { opacity: 0; width: 0; overflow: hidden; }
   }
 
-  @include max-md {
+  @include lg {
     transform: translateX(-100%);
-    width: $sidebar-width !important;
-    &.open { transform: translateX(0); }
+    &--open { transform: translateX(0); }
   }
-}
 
-// Logo
-.sidebar-logo {
-  @include flex-between;
-  padding: $space-5 $space-5;
-  border-bottom: 1px solid $border-subtle;
-  min-height: 72px;
-  flex-shrink: 0;
-
-  .logo-brand {
-    display: flex;
-    align-items: center;
+  // Logo
+  &__logo {
+    @include flex(row, center, flex-start);
     gap: $space-3;
+    padding: $space-5 $space-5;
+    border-bottom: 1px solid $border-subtle;
     text-decoration: none;
+    flex-shrink: 0;
 
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      background: $gradient-red;
+    &-icon {
+      width: 36px; height: 36px;
+      background: $primary;
       border-radius: $radius-md;
       @include flex-center;
-      font-size: 1rem;
-      font-weight: $weight-extrabold;
+      font-size: $font-xl;
+      font-weight: $font-bold;
       color: #fff;
       flex-shrink: 0;
-      @include neon-glow;
+      box-shadow: $shadow-glow;
     }
 
-    .logo-text {
+    &-text {
       @include flex-col;
-      .name {
-        font-size: $font-sm;
-        font-weight: $weight-bold;
+      gap: 0;
+      overflow: hidden;
+      transition: all $transition-base;
+
+      strong {
+        font-size: $font-base;
+        font-weight: $font-bold;
         color: $text-primary;
-        letter-spacing: -0.02em;
+        line-height: 1.2;
+        white-space: nowrap;
       }
-      .tagline {
-        font-size: 10px;
+      span {
+        font-size: $font-xs;
         color: $text-muted;
-        font-weight: $weight-medium;
+        white-space: nowrap;
       }
     }
   }
 
-  .sidebar-toggle {
-    width: 28px;
-    height: 28px;
-    @include flex-center;
-    background: transparent;
-    border: none;
-    color: $text-muted;
-    cursor: pointer;
-    border-radius: $radius-sm;
-    font-size: 0.9rem;
-    transition: $transition-fast;
-    &:hover { color: $text-primary; background: $bg-hover; }
-    flex-shrink: 0;
+  // Navigation
+  &__nav {
+    flex: 1;
+    padding: $space-4 $space-3;
+    @include flex-col;
+    gap: $space-1;
   }
-}
 
-// Nav sections
-.nav-section {
-  margin: $space-4 0 $space-2;
-  padding: 0 $space-3;
+  &__section {
+    margin-top: $space-4;
+    &:first-child { margin-top: 0; }
+  }
 
-  &-title {
+  &__section-title {
     font-size: 10px;
-    font-weight: $weight-semibold;
+    font-weight: $font-semibold;
+    color: $text-muted;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: $text-muted;
-    padding: 0 $space-3 $space-2;
-  }
-}
-
-.nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 0 $space-3;
-}
-
-// Nav items
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: $space-3;
-  padding: $space-3 $space-3;
-  border-radius: $radius-md;
-  text-decoration: none;
-  color: $text-secondary;
-  font-size: $font-sm;
-  font-weight: $weight-medium;
-  cursor: pointer;
-  transition: $transition-fast;
-  margin-bottom: 2px;
-  position: relative;
-  white-space: nowrap;
-
-  .nav-icon {
-    width: 20px;
-    height: 20px;
-    @include flex-center;
-    flex-shrink: 0;
-    font-size: 1rem;
-    transition: $transition-fast;
+    padding: 0 $space-3;
+    margin-bottom: $space-2;
+    transition: all $transition-base;
   }
 
-  .nav-label { flex: 1; }
+  &__item {
+    @include flex(row, center, flex-start);
+    gap: $space-3;
+    padding: $space-3 $space-3;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    font-size: $font-sm;
+    font-weight: $font-medium;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all $transition-fast;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    overflow: hidden;
 
-  .nav-badge {
-    font-size: 10px;
-    font-weight: $weight-bold;
-    background: $brand-red;
-    color: #fff;
-    padding: 1px 6px;
-    border-radius: $radius-full;
-    min-width: 18px;
-    text-align: center;
-  }
-
-  &:hover {
-    background: $bg-hover;
-    color: $text-primary;
-    .nav-icon { color: $brand-red; }
-  }
-
-  &.active {
-    background: $brand-red-dim;
-    color: $brand-red;
-    font-weight: $weight-semibold;
-    border: 1px solid $brand-red-glow;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 20%;
-      bottom: 20%;
-      width: 3px;
-      background: $brand-red;
-      border-radius: 0 2px 2px 0;
+    &:hover {
+      background: $bg-elevated;
+      color: $text-primary;
+      border-color: $border-subtle;
     }
 
-    .nav-icon { color: $brand-red; }
+    &--active {
+      background: $primary-subtle;
+      color: $primary;
+      border-color: rgba($primary, 0.2);
+      .sidebar__item-icon { color: $primary; }
+    }
+
+    &-icon {
+      width: 20px; height: 20px;
+      flex-shrink: 0;
+      color: inherit;
+    }
+
+    &-label {
+      flex: 1;
+      transition: all $transition-base;
+    }
+
+    &-badge {
+      background: $primary;
+      color: #fff;
+      font-size: 10px;
+      font-weight: $font-bold;
+      padding: 1px 6px;
+      border-radius: $radius-full;
+      min-width: 18px;
+      text-align: center;
+    }
   }
-}
 
-// Sidebar footer
-.sidebar-footer {
-  margin-top: auto;
-  border-top: 1px solid $border-subtle;
-  padding: $space-4;
+  // Bottom section
+  &__bottom {
+    padding: $space-4 $space-3;
+    border-top: 1px solid $border-subtle;
+    @include flex-col;
+    gap: $space-2;
+  }
 
-  .user-info {
-    display: flex;
-    align-items: center;
+  &__user {
+    @include flex(row, center, flex-start);
     gap: $space-3;
     padding: $space-3;
     border-radius: $radius-md;
+    background: $bg-elevated;
+    border: 1px solid $border-subtle;
     cursor: pointer;
-    transition: $transition-fast;
-    &:hover { background: $bg-hover; }
-  }
+    transition: all $transition-fast;
 
-  .user-avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: $radius-full;
-    background: $gradient-red;
-    @include flex-center;
-    font-size: $font-sm;
-    font-weight: $weight-bold;
-    color: #fff;
-    flex-shrink: 0;
-  }
+    &:hover { border-color: $border-active; }
 
-  .user-details {
-    flex: 1;
-    min-width: 0;
-    .user-name  { font-size: $font-xs; font-weight: $weight-semibold; color: $text-primary; @include truncate; }
-    .user-role  { font-size: 10px; color: $text-muted; @include truncate; }
+    &-avatar {
+      width: 32px; height: 32px;
+      border-radius: $radius-full;
+      background: $primary;
+      @include flex-center;
+      font-size: $font-sm;
+      font-weight: $font-bold;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    &-info {
+      @include flex-col;
+      gap: 0;
+      overflow: hidden;
+      flex: 1;
+      strong {
+        font-size: $font-sm;
+        color: $text-primary;
+        @include truncate;
+      }
+      span {
+        font-size: $font-xs;
+        color: $text-muted;
+        @include truncate;
+      }
+    }
   }
+}
+
+// Mobile overlay
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: $bg-overlay;
+  z-index: $z-sidebar - 1;
+  @include lg { display: block; }
 }

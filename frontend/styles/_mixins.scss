@@ -1,53 +1,122 @@
-@import 'variables';
+@use 'variables' as *;
 
-@mixin flex($dir: row, $align: center, $justify: flex-start, $gap: 0) {
+// Flex helpers
+@mixin flex($dir: row, $align: center, $justify: flex-start, $wrap: nowrap) {
   display: flex;
   flex-direction: $dir;
   align-items: $align;
   justify-content: $justify;
-  @if $gap != 0 { gap: $gap; }
+  flex-wrap: $wrap;
 }
 
-@mixin grid($cols: 1, $gap: 1rem) {
-  display: grid;
-  grid-template-columns: repeat($cols, 1fr);
-  gap: $gap;
+@mixin flex-center { @include flex(row, center, center); }
+@mixin flex-between { @include flex(row, center, space-between); }
+@mixin flex-col { @include flex(column, flex-start, flex-start); }
+
+// Card
+@mixin card($padding: $space-6) {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: $padding;
+  box-shadow: $shadow-card;
+  transition: border-color $transition-base, box-shadow $transition-base;
+  &:hover { border-color: $border-active; }
 }
 
+// Glow button
+@mixin btn-glow {
+  background: $primary;
+  color: #fff;
+  border: none;
+  border-radius: $radius-md;
+  font-weight: $font-semibold;
+  cursor: pointer;
+  transition: all $transition-base;
+  &:hover {
+    background: $primary-light;
+    box-shadow: $shadow-glow;
+    transform: translateY(-1px);
+  }
+  &:active { transform: translateY(0); }
+}
+
+// Text truncate
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Scrollbar styling
+@mixin scrollbar($size: 6px) {
+  &::-webkit-scrollbar { width: $size; height: $size; }
+  &::-webkit-scrollbar-track { background: $bg-surface; }
+  &::-webkit-scrollbar-thumb {
+    background: $border-color;
+    border-radius: $radius-full;
+    &:hover { background: $primary; }
+  }
+}
+
+// Responsive
+@mixin sm { @media (max-width: #{$bp-sm}) { @content; } }
+@mixin md { @media (max-width: #{$bp-md}) { @content; } }
+@mixin lg { @media (max-width: #{$bp-lg}) { @content; } }
+@mixin xl { @media (max-width: #{$bp-xl}) { @content; } }
+
+// Glass morphism
 @mixin glass {
-  background: rgba($bg-card, 0.8);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-@mixin neon-glow($color: $accent-red, $size: 8px) {
-  box-shadow: 0 0 $size rgba($color, 0.4), 0 0 ($size * 2) rgba($color, 0.2);
+// Neon text glow
+@mixin neon-text($color: $primary) {
+  color: $color;
+  text-shadow: 0 0 10px rgba($color, 0.8), 0 0 30px rgba($color, 0.4);
 }
 
-@mixin truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-@mixin responsive($bp) {
-  @if $bp == 'sm'  { @media (max-width: 640px)  { @content; } }
-  @if $bp == 'md'  { @media (max-width: 768px)  { @content; } }
-  @if $bp == 'lg'  { @media (max-width: 1024px) { @content; } }
-  @if $bp == 'xl'  { @media (max-width: 1280px) { @content; } }
+// Status badge
+@mixin badge($bg, $color) {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  padding: 2px $space-2;
+  border-radius: $radius-full;
+  font-size: $font-xs;
+  font-weight: $font-medium;
+  background: $bg;
+  color: $color;
 }
 
-@mixin card-hover {
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-  &:hover { transform: translateY(-2px); border-color: $accent-red; @include neon-glow; }
+// Input base
+@mixin input-base {
+  width: 100%;
+  background: $bg-surface;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  color: $text-primary;
+  font-size: $font-sm;
+  padding: $space-3 $space-4;
+  outline: none;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+  font-family: $font-sans;
+  &::placeholder { color: $text-muted; }
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px $primary-glow;
+  }
 }
 
-@mixin status-dot($color) {
-  &::before { content: ''; display: inline-block; width: 8px; height: 8px;
-    background: $color; border-radius: 50%; margin-right: 6px;
-    animation: pulse 2s infinite; }
+// Pulse animation
+@mixin pulse-dot($color: $success) {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $color;
+  box-shadow: 0 0 0 0 rgba($color, 0.4);
+  animation: pulse 2s infinite;
 }
-
-@mixin skeleton {
-  background: linear-gradient(90deg, $bg-secondary 25%, $bg-hover 50%, $bg-secondary 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-@keyframes shimmer { to { background-position: -200% 0; } }

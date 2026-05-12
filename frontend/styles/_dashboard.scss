@@ -1,0 +1,121 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.dashboard {
+  &__welcome {
+    @include card($space-6);
+    background: linear-gradient(135deg, $bg-card 0%, rgba($primary, 0.05) 100%);
+    border-color: rgba($primary, 0.15);
+    @include flex-between;
+    margin-bottom: $space-6;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba($primary, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    h2 {
+      font-size: $font-2xl;
+      font-weight: $font-bold;
+      margin-bottom: $space-2;
+      span { color: $primary; }
+    }
+    p { color: $text-secondary; font-size: $font-sm; }
+  }
+
+  &__charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: $space-6;
+    margin-bottom: $space-6;
+    @include lg { grid-template-columns: 1fr; }
+  }
+
+  &__activity {
+    @include card;
+    &-list { @include flex-col; gap: $space-3; }
+    &-item {
+      @include flex(row, center, flex-start);
+      gap: $space-3;
+      padding: $space-3;
+      border-radius: $radius-md;
+      background: $bg-elevated;
+      font-size: $font-sm;
+      &-icon {
+        width: 32px; height: 32px;
+        border-radius: $radius-md;
+        background: $primary-subtle;
+        @include flex-center;
+        color: $primary;
+        flex-shrink: 0;
+      }
+      &-text { flex: 1; color: $text-secondary; }
+      &-time { color: $text-muted; font-size: $font-xs; }
+    }
+  }
+
+  &__quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: $space-4;
+    margin-bottom: $space-6;
+
+    &-item {
+      @include card($space-4);
+      @include flex-col;
+      align-items: center;
+      text-align: center;
+      gap: $space-3;
+      cursor: pointer;
+      text-decoration: none;
+
+      &:hover {
+        border-color: $primary;
+        background: $primary-subtle;
+        transform: translateY(-2px);
+      }
+
+      &-icon {
+        width: 44px; height: 44px;
+        border-radius: $radius-lg;
+        background: $primary-subtle;
+        border: 1px solid rgba($primary, 0.2);
+        @include flex-center;
+        color: $primary;
+        font-size: $font-xl;
+      }
+
+      span {
+        font-size: $font-xs;
+        font-weight: $font-medium;
+        color: $text-secondary;
+      }
+    }
+  }
+}
+
+// Resource usage gauge
+.resource-ring {
+  position: relative;
+  width: 80px; height: 80px;
+  @include flex-center;
+
+  svg {
+    position: absolute;
+    top: 0; left: 0;
+    transform: rotate(-90deg);
+  }
+
+  &__value {
+    font-size: $font-sm;
+    font-weight: $font-bold;
+    color: $text-primary;
+    z-index: 1;
+  }
+}

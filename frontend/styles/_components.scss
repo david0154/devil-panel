@@ -1,478 +1,540 @@
-// ============================================
-// Devil Panel — Component Styles
-// ============================================
-@import 'variables';
-@import 'mixins';
+@use 'variables' as *;
+@use 'mixins' as *;
 
-// ---- Buttons ----
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: $space-2;
+// ============================================================
+// All reusable component styles
+// ============================================================
+
+// — Alert
+.alert {
+  @include flex(row, flex-start, flex-start);
+  gap: $space-3;
+  padding: $space-4 $space-5;
   border-radius: $radius-md;
-  font-weight: $weight-semibold;
   font-size: $font-sm;
-  cursor: pointer;
-  transition: $transition-base;
-  white-space: nowrap;
-  text-decoration: none;
-  border: none;
-  outline: none;
+  border: 1px solid;
 
-  &-sm  { padding: $space-2 $space-3; font-size: $font-xs; }
-  &-md  { padding: $space-3 $space-5; }
-  &-lg  { padding: $space-4 $space-8; font-size: $font-base; }
+  &--success { background: $success-bg; border-color: rgba($success, 0.3); color: $success; }
+  &--warning { background: $warning-bg; border-color: rgba($warning, 0.3); color: $warning; }
+  &--danger  { background: $danger-bg;  border-color: rgba($danger,  0.3); color: $danger;  }
+  &--info    { background: $info-bg;    border-color: rgba($info,    0.3); color: $info;    }
 
-  &-primary  { @include btn-primary; }
-  &-ghost    { @include btn-ghost; }
-
-  &-success {
-    background: rgba($status-success, 0.15);
-    color: $status-success;
-    border: 1px solid rgba($status-success, 0.3);
-    &:hover { background: rgba($status-success, 0.25); }
-  }
-
-  &-danger {
-    background: rgba($status-danger, 0.15);
-    color: $status-danger;
-    border: 1px solid rgba($status-danger, 0.3);
-    &:hover { background: rgba($status-danger, 0.25); }
-  }
-
-  &-warning {
-    background: rgba($status-warning, 0.15);
-    color: $status-warning;
-    border: 1px solid rgba($status-warning, 0.3);
-    &:hover { background: rgba($status-warning, 0.25); }
-  }
-
-  &-icon {
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    @include flex-center;
-    border-radius: $radius-md;
-    background: $bg-elevated;
-    border: 1px solid $border-default;
-    color: $text-secondary;
-    &:hover { color: $text-primary; border-color: $border-active; background: $bg-hover; }
-  }
-
-  &:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  &__icon { flex-shrink: 0; margin-top: 2px; }
+  &__body { flex: 1; }
+  &__title { font-weight: $font-semibold; margin-bottom: $space-1; }
 }
 
-// ---- Cards ----
-.card {
-  @include glass-card;
-  padding: $space-6;
-  animation: fadeIn 0.35s ease both;
-
-  &-header {
-    @include flex-between;
-    margin-bottom: $space-5;
-    padding-bottom: $space-4;
-    border-bottom: 1px solid $border-subtle;
-
-    .card-title {
-      font-size: $font-base;
-      font-weight: $weight-semibold;
-      color: $text-primary;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: $space-2;
-    }
-  }
-
-  &-body { flex: 1; }
-
-  &-footer {
-    margin-top: $space-5;
-    padding-top: $space-4;
-    border-top: 1px solid $border-subtle;
-    @include flex-between;
-  }
-
-  &.clickable {
-    cursor: pointer;
-    @include card-hover;
-  }
-
-  &.danger-border {
-    border-color: rgba($status-danger, 0.3);
-    &:hover { border-color: $status-danger; }
-  }
-}
-
-// ---- Tables ----
-.dp-table-wrap {
-  overflow-x: auto;
-  @include custom-scrollbar;
-  border-radius: $radius-lg;
-  border: 1px solid $border-default;
-}
-
-.dp-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: $font-sm;
-
-  thead {
-    background: $bg-elevated;
-
-    th {
-      padding: $space-3 $space-4;
-      text-align: left;
-      color: $text-muted;
-      font-size: $font-xs;
-      font-weight: $weight-semibold;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-      border-bottom: 1px solid $border-default;
-    }
-  }
-
-  tbody {
-    tr {
-      border-bottom: 1px solid $border-subtle;
-      transition: $transition-fast;
-
-      &:last-child { border-bottom: none; }
-
-      &:hover {
-        background: $bg-hover;
-        td:first-child { border-left: 2px solid $brand-red; }
-      }
-    }
-
-    td {
-      padding: $space-4;
-      color: $text-primary;
-      border-left: 2px solid transparent;
-      transition: $transition-fast;
-    }
-  }
-}
-
-// ---- Badges ----
-.badge {
-  &-success { @include status-badge($status-success); }
-  &-danger  { @include status-badge($status-danger); }
-  &-warning { @include status-badge($status-warning); }
-  &-info    { @include status-badge($status-info); }
-  &-purple  { @include status-badge($status-purple); }
-  &-muted {
-    display: inline-flex;
-    align-items: center;
-    padding: 2px $space-2;
-    border-radius: $radius-full;
-    font-size: $font-xs;
-    font-weight: $weight-semibold;
-    background: $bg-elevated;
-    color: $text-secondary;
-    border: 1px solid $border-default;
-  }
-}
-
-// ---- Forms ----
-.form-group {
-  margin-bottom: $space-5;
-
-  label {
-    display: block;
-    font-size: $font-sm;
-    font-weight: $weight-medium;
-    color: $text-secondary;
-    margin-bottom: $space-2;
-  }
-
-  .form-input   { @include input-style; }
-  .form-select  {
-    @include input-style;
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: $space-10;
-  }
-  .form-textarea {
-    @include input-style;
-    resize: vertical;
-    min-height: 100px;
-    line-height: 1.6;
-  }
-
-  .form-hint {
-    font-size: $font-xs;
-    color: $text-muted;
-    margin-top: $space-1;
-  }
-  .form-error {
-    font-size: $font-xs;
-    color: $status-danger;
-    margin-top: $space-1;
-    display: flex;
-    align-items: center;
+// — Tabs
+.tabs {
+  &__list {
+    @include flex(row, center, flex-start);
     gap: $space-1;
+    border-bottom: 1px solid $border-color;
+    margin-bottom: $space-6;
+    overflow-x: auto;
+    @include scrollbar(4px);
   }
-}
 
-// ---- Modal ----
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(4px);
-  z-index: $z-modal;
-  @include flex-center;
-  animation: fadeIn 0.2s ease;
-  padding: $space-4;
-}
+  &__item {
+    padding: $space-3 $space-5;
+    font-size: $font-sm;
+    font-weight: $font-medium;
+    color: $text-muted;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    transition: all $transition-fast;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 
-.modal {
-  @include glass-card;
-  width: 100%;
-  max-width: 560px;
-  max-height: 90vh;
-  overflow-y: auto;
-  @include custom-scrollbar;
-  animation: scaleIn 0.25s ease;
-  border-color: $border-active;
-
-  &-header {
-    @include flex-between;
-    padding: $space-5 $space-6;
-    border-bottom: 1px solid $border-subtle;
-
-    h2 {
-      font-size: $font-lg;
-      font-weight: $weight-semibold;
-      color: $text-primary;
-      margin: 0;
+    &:hover { color: $text-primary; }
+    &--active {
+      color: $primary;
+      border-bottom-color: $primary;
     }
   }
 
-  &-body    { padding: $space-6; }
+  &__panel { animation: fadeIn 0.2s ease; }
+}
 
-  &-footer {
-    padding: $space-5 $space-6;
-    border-top: 1px solid $border-subtle;
-    @include flex-between;
-    gap: $space-3;
+// — Dropdown
+.dropdown {
+  position: relative;
+  display: inline-flex;
 
-    .btn { flex: 1; justify-content: center; }
+  &__menu {
+    position: absolute;
+    top: calc(100% + $space-2);
+    right: 0;
+    min-width: 180px;
+    background: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-lg;
+    z-index: $z-tooltip;
+    overflow: hidden;
+    animation: fadeIn 0.15s ease;
   }
 
-  &-close {
-    width: 32px;
-    height: 32px;
-    @include flex-center;
-    border-radius: $radius-md;
-    background: transparent;
-    border: none;
+  &__item {
+    @include flex(row, center, flex-start);
+    gap: $space-3;
+    padding: $space-3 $space-4;
+    font-size: $font-sm;
     color: $text-secondary;
     cursor: pointer;
-    font-size: 1.25rem;
-    transition: $transition-fast;
-    &:hover { color: $text-primary; background: $bg-hover; }
+    transition: all $transition-fast;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+
+    &:hover { background: $bg-elevated; color: $text-primary; }
+    &--danger:hover { background: $danger-bg; color: $danger; }
+  }
+
+  &__divider {
+    border-top: 1px solid $border-subtle;
+    margin: $space-1 0;
   }
 }
 
-// ---- Progress Bar ----
-.progress {
-  height: 6px;
-  background: $bg-elevated;
-  border-radius: $radius-full;
-  overflow: hidden;
+// — Toggle Switch
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px; height: 24px;
 
-  &-bar {
-    height: 100%;
+  input { opacity: 0; width: 0; height: 0; }
+
+  &__slider {
+    position: absolute; inset: 0;
+    background: $border-color;
     border-radius: $radius-full;
-    background: $gradient-red;
-    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    animation: progress-fill 1s ease both;
+    cursor: pointer;
+    transition: background $transition-fast;
 
-    &::after {
+    &::before {
       content: '';
       position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 40px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+      left: 3px; bottom: 3px;
+      width: 18px; height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform $transition-fast;
     }
   }
 
-  &.success .progress-bar { background: $status-success; }
-  &.warning .progress-bar { background: $status-warning; }
-  &.info    .progress-bar { background: $status-info; }
-}
-
-// ---- Toast Notifications ----
-.toast-container {
-  position: fixed;
-  bottom: $space-6;
-  right: $space-6;
-  z-index: $z-toast;
-  @include flex-col;
-  gap: $space-3;
-  pointer-events: none;
-}
-
-.toast {
-  @include glass-card;
-  padding: $space-4 $space-5;
-  display: flex;
-  align-items: flex-start;
-  gap: $space-3;
-  min-width: 300px;
-  max-width: 440px;
-  pointer-events: all;
-  animation: fadeInRight 0.3s ease;
-  border-left: 3px solid $border-default;
-
-  &.success { border-left-color: $status-success; }
-  &.error   { border-left-color: $status-danger; }
-  &.warning { border-left-color: $status-warning; }
-  &.info    { border-left-color: $status-info; }
-
-  .toast-icon { font-size: 1.1rem; flex-shrink: 0; }
-  .toast-content {
-    flex: 1;
-    .toast-title   { font-size: $font-sm; font-weight: $weight-semibold; color: $text-primary; }
-    .toast-message { font-size: $font-xs; color: $text-secondary; margin-top: 2px; }
+  input:checked + &__slider {
+    background: $primary;
+    &::before { transform: translateX(20px); }
   }
 }
 
-// ---- Tabs ----
-.tabs {
-  display: flex;
-  gap: 2px;
-  background: $bg-elevated;
-  border-radius: $radius-lg;
-  padding: 3px;
-  width: fit-content;
-  margin-bottom: $space-6;
-
-  .tab {
-    padding: $space-2 $space-5;
-    border-radius: $radius-md;
-    font-size: $font-sm;
-    font-weight: $weight-medium;
-    color: $text-secondary;
-    cursor: pointer;
-    transition: $transition-fast;
-    border: none;
-    background: transparent;
-
-    &.active, &:hover {
-      background: $bg-card;
-      color: $text-primary;
-    }
-
-    &.active {
-      color: $brand-red;
-      font-weight: $weight-semibold;
-    }
-  }
-}
-
-// ---- Empty State ----
-.empty-state {
-  @include flex-col;
-  align-items: center;
-  justify-content: center;
-  padding: $space-20;
-  text-align: center;
-  color: $text-muted;
-
-  .empty-icon  { font-size: 3rem; margin-bottom: $space-4; opacity: 0.4; }
-  .empty-title { font-size: $font-lg; font-weight: $weight-semibold; color: $text-secondary; margin-bottom: $space-2; }
-  .empty-text  { font-size: $font-sm; max-width: 320px; line-height: 1.6; margin-bottom: $space-6; }
-}
-
-// ---- Search Input ----
-.search-input {
+// — Tooltip
+.tooltip {
   position: relative;
+  display: inline-flex;
 
-  .search-icon {
+  &__content {
     position: absolute;
-    left: $space-3;
-    top: 50%;
-    transform: translateY(-50%);
-    color: $text-muted;
-    font-size: 0.9rem;
+    bottom: calc(100% + $space-2);
+    left: 50%;
+    transform: translateX(-50%);
+    background: $bg-elevated;
+    border: 1px solid $border-color;
+    color: $text-secondary;
+    font-size: $font-xs;
+    padding: $space-2 $space-3;
+    border-radius: $radius-md;
+    white-space: nowrap;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity $transition-fast;
+    z-index: $z-tooltip;
   }
 
-  input {
-    @include input-style;
-    padding-left: $space-8;
-  }
+  &:hover &__content { opacity: 1; }
 }
 
-// ---- Loading Spinner ----
+// — Spinner / Loader
 .spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid $border-default;
-  border-top-color: $brand-red;
+  width: 24px; height: 24px;
+  border: 2px solid $border-color;
+  border-top-color: $primary;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 
-  &-lg { width: 40px; height: 40px; border-width: 3px; }
-  &-overlay {
-    position: fixed;
-    inset: 0;
+  &--sm { width: 16px; height: 16px; }
+  &--lg { width: 40px; height: 40px; }
+}
+
+.page-loader {
+  @include flex-center;
+  @include flex-col;
+  gap: $space-4;
+  min-height: 300px;
+  color: $text-muted;
+  font-size: $font-sm;
+}
+
+// — Empty state
+.empty-state {
+  @include flex-center;
+  @include flex-col;
+  gap: $space-4;
+  padding: $space-16;
+  color: $text-muted;
+  text-align: center;
+
+  &__icon {
+    width: 64px; height: 64px;
+    border-radius: $radius-xl;
+    background: $bg-elevated;
     @include flex-center;
-    background: $bg-overlay;
-    z-index: $z-overlay;
+    color: $text-muted;
+    font-size: $font-2xl;
+  }
+  h3 { font-size: $font-lg; color: $text-secondary; }
+  p  { font-size: $font-sm; max-width: 320px; }
+}
+
+// — Confirmation dialog
+.confirm-dialog {
+  text-align: center;
+  &__icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: $danger-bg;
+    border: 1px solid rgba($danger, 0.3);
+    @include flex-center;
+    margin: 0 auto $space-5;
+    color: $danger;
+  }
+  h3 { font-size: $font-xl; margin-bottom: $space-3; }
+  p  { color: $text-secondary; font-size: $font-sm; margin-bottom: $space-6; }
+  &__actions { @include flex-center; gap: $space-3; }
+}
+
+// — Terminal
+.terminal {
+  background: #0d0d0d;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  overflow: hidden;
+
+  &__bar {
+    @include flex(row, center, flex-start);
+    gap: $space-2;
+    padding: $space-3 $space-4;
+    background: $bg-elevated;
+    border-bottom: 1px solid $border-subtle;
+
+    &-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      &--red    { background: #ff5f56; }
+      &--yellow { background: #ffbd2e; }
+      &--green  { background: #27c93f; }
+    }
+
+    span {
+      font-size: $font-xs;
+      color: $text-muted;
+      font-family: $font-mono;
+      margin-left: $space-2;
+    }
+  }
+
+  &__body {
+    padding: $space-4;
+    font-family: $font-mono;
+    font-size: $font-xs;
+    color: #33ff33;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    @include scrollbar;
+
+    .prompt { color: $primary; }
+    .output { color: #a0a0a0; }
+    .error  { color: $danger; }
   }
 }
 
-// ---- Resource Usage Ring ----
-.resource-ring {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  @include flex-center;
+// — File manager
+.filemanager {
+  @include card(0);
+  overflow: hidden;
 
-  svg { transform: rotate(-90deg); }
+  &__toolbar {
+    @include flex-between;
+    padding: $space-4 $space-5;
+    border-bottom: 1px solid $border-subtle;
+    background: $bg-elevated;
+    gap: $space-3;
+  }
 
-  .ring-label {
-    position: absolute;
+  &__breadcrumb {
+    @include flex(row, center, flex-start);
+    gap: $space-1;
+    font-size: $font-sm;
+    color: $text-muted;
+    flex: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+    @include scrollbar(3px);
+
+    span {
+      cursor: pointer;
+      padding: $space-1 $space-2;
+      border-radius: $radius-sm;
+      &:hover { color: $primary; background: $primary-subtle; }
+      &.active { color: $text-primary; }
+    }
+    .sep { color: $border-color; }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: $space-3;
+    padding: $space-5;
+  }
+
+  &__item {
     @include flex-col;
     align-items: center;
-    .value { font-size: $font-sm; font-weight: $weight-bold; color: $text-primary; }
-    .unit  { font-size: 9px; color: $text-muted; }
+    gap: $space-2;
+    padding: $space-3;
+    border-radius: $radius-md;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $bg-elevated;
+      border-color: $border-color;
+    }
+    &--selected {
+      background: $primary-subtle;
+      border-color: rgba($primary, 0.3);
+    }
+
+    &-icon { font-size: 2rem; }
+    &-name {
+      font-size: $font-xs;
+      color: $text-secondary;
+      @include truncate;
+      width: 100%;
+    }
+    &-size { font-size: 10px; color: $text-muted; }
   }
 }
 
-// ---- Terminal Output ----
-.terminal {
-  background: #050508;
-  border: 1px solid $border-default;
-  border-radius: $radius-lg;
-  padding: $space-4;
-  font-family: $font-mono;
-  font-size: $font-xs;
-  color: #00ff41;
-  min-height: 200px;
-  max-height: 400px;
-  overflow-y: auto;
-  @include custom-scrollbar;
-  line-height: 1.6;
+// — AI Chat
+.ai-chat {
+  @include flex-col;
+  height: 100%;
 
-  .term-line {
-    margin: 0;
-    padding: 1px 0;
-    &.error  { color: $status-danger; }
-    &.warn   { color: $status-warning; }
-    &.info   { color: $status-info; }
-    &.prompt { color: $brand-red; }
+  &__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-5;
+    @include flex-col;
+    gap: $space-4;
+    @include scrollbar;
+  }
+
+  &__message {
+    @include flex(row, flex-start, flex-start);
+    gap: $space-3;
+    max-width: 80%;
+    animation: fadeIn 0.2s ease;
+
+    &--user { align-self: flex-end; flex-direction: row-reverse; }
+
+    &-avatar {
+      width: 32px; height: 32px;
+      border-radius: $radius-full;
+      @include flex-center;
+      font-size: $font-sm;
+      font-weight: $font-bold;
+      flex-shrink: 0;
+
+      &--ai {
+        background: $primary;
+        color: #fff;
+        box-shadow: $shadow-glow;
+      }
+      &--user {
+        background: $bg-elevated;
+        border: 1px solid $border-color;
+        color: $text-secondary;
+      }
+    }
+
+    &-bubble {
+      padding: $space-3 $space-4;
+      border-radius: $radius-lg;
+      font-size: $font-sm;
+      line-height: 1.6;
+      max-width: 100%;
+
+      .ai-chat__message--user & {
+        background: $primary;
+        color: #fff;
+        border-radius: $radius-lg $radius-lg 4px $radius-lg;
+      }
+      .ai-chat__message--ai & {
+        background: $bg-elevated;
+        border: 1px solid $border-subtle;
+        color: $text-primary;
+        border-radius: $radius-lg $radius-lg $radius-lg 4px;
+      }
+    }
+  }
+
+  &__input-area {
+    padding: $space-4 $space-5;
+    border-top: 1px solid $border-subtle;
+    background: $bg-surface;
+
+    &-row {
+      @include flex(row, flex-end, flex-start);
+      gap: $space-3;
+      background: $bg-elevated;
+      border: 1px solid $border-color;
+      border-radius: $radius-xl;
+      padding: $space-2 $space-2 $space-2 $space-4;
+      transition: border-color $transition-fast;
+      &:focus-within { border-color: $primary; }
+    }
+
+    textarea {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: $text-primary;
+      font-family: $font-sans;
+      font-size: $font-sm;
+      resize: none;
+      max-height: 120px;
+      &::placeholder { color: $text-muted; }
+    }
+
+    &-send {
+      width: 36px; height: 36px;
+      border-radius: $radius-full;
+      background: $primary;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      @include flex-center;
+      flex-shrink: 0;
+      transition: all $transition-fast;
+      &:hover { background: $primary-light; box-shadow: $shadow-glow; }
+      &:disabled { opacity: 0.5; cursor: not-allowed; }
+    }
+  }
+
+  &__suggestions {
+    @include flex(row, center, flex-start);
+    flex-wrap: wrap;
+    gap: $space-2;
+    padding: $space-3 $space-5 0;
+
+    button {
+      padding: $space-2 $space-4;
+      background: $bg-elevated;
+      border: 1px solid $border-subtle;
+      border-radius: $radius-full;
+      color: $text-muted;
+      font-size: $font-xs;
+      cursor: pointer;
+      transition: all $transition-fast;
+      &:hover { border-color: $primary; color: $primary; background: $primary-subtle; }
+    }
+  }
+}
+
+// — Monitoring charts area
+.monitoring {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-6;
+    @include md { grid-template-columns: 1fr; }
+  }
+
+  &__gauge {
+    @include card;
+    text-align: center;
+    &-value {
+      font-size: $font-4xl;
+      font-weight: $font-bold;
+      color: $primary;
+      line-height: 1;
+      margin: $space-4 0 $space-2;
+    }
+    &-label { font-size: $font-sm; color: $text-muted; }
+  }
+}
+
+// — Login page
+.login-page {
+  min-height: 100vh;
+  background: $bg-base;
+  @include flex-center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba($primary, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  &__box {
+    @include card($space-10);
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__logo {
+    @include flex-center;
+    @include flex-col;
+    gap: $space-3;
+    margin-bottom: $space-8;
+    text-align: center;
+
+    &-icon {
+      width: 56px; height: 56px;
+      background: $primary;
+      border-radius: $radius-xl;
+      @include flex-center;
+      font-size: $font-2xl;
+      font-weight: $font-bold;
+      color: #fff;
+      box-shadow: $shadow-glow;
+    }
+
+    h1 {
+      font-size: $font-2xl;
+      font-weight: $font-bold;
+      color: $text-primary;
+    }
+    p { font-size: $font-sm; color: $text-muted; }
   }
 }
