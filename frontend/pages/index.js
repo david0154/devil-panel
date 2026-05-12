@@ -1,20 +1,15 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { useAuthStore } from '../store/authStore';
-import Spinner from '../components/ui/Spinner';
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Home() {
-  const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
-
+  const router = useRouter()
   useEffect(() => {
-    if (isAuthenticated) router.replace('/dashboard');
-    else router.replace('/login');
-  }, [isAuthenticated]);
-
+    const token = localStorage.getItem('dp_token')
+    router.replace(token ? '/dashboard' : '/login')
+  }, [router])
   return (
-    <div className="min-h-screen bg-devil-bg flex items-center justify-center">
-      <Spinner text="Loading Devil Panel..." />
+    <div style={{ display:'flex', alignItems:'center', justifyContent:'center', minHeight:'100vh', background:'#0a0a0f' }}>
+      <div className="loading-spinner" />
     </div>
-  );
+  )
 }
