@@ -1,0 +1,16 @@
+# Force GitHub language detection
+*.js    linguist-language=JavaScript
+*.jsx   linguist-language=JavaScript
+*.ts    linguist-language=TypeScript
+*.tsx   linguist-language=TypeScript
+*.html  linguist-language=HTML
+*.css   linguist-language=CSS
+*.scss  linguist-language=SCSS
+*.sh    linguist-language=Shell
+*.py    linguist-language=Python
+
+# Exclude vendor/generated from stats
+node_modules/*  linguist-vendored
+.next/*         linguist-generated
+dist/*          linguist-generated
+package-lock.json linguist-generated
