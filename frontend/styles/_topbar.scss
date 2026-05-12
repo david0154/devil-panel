@@ -1,0 +1,139 @@
+// ============================================
+// Devil Panel — Top Navigation Bar
+// ============================================
+@import 'variables';
+@import 'mixins';
+
+.topbar {
+  height: 64px;
+  background: rgba($bg-secondary, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid $border-subtle;
+  @include flex-between;
+  padding: 0 $space-8;
+  position: sticky;
+  top: 0;
+  z-index: $z-dropdown;
+  flex-shrink: 0;
+
+  @include max-md {
+    padding: 0 $space-4;
+  }
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: $font-sm;
+
+    .breadcrumb-item {
+      color: $text-muted;
+      &.active { color: $text-primary; font-weight: $weight-medium; }
+    }
+
+    .breadcrumb-sep { color: $text-muted; font-size: $font-xs; }
+  }
+
+  .menu-btn {
+    display: none;
+    width: 36px;
+    height: 36px;
+    @include flex-center;
+    background: transparent;
+    border: none;
+    color: $text-secondary;
+    cursor: pointer;
+    border-radius: $radius-md;
+    font-size: 1.2rem;
+    &:hover { color: $text-primary; }
+
+    @include max-md { display: flex; }
+  }
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+
+  // Server health pill
+  .server-health {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-2 $space-3;
+    background: $bg-elevated;
+    border: 1px solid $border-default;
+    border-radius: $radius-full;
+    font-size: $font-xs;
+    color: $text-secondary;
+    cursor: default;
+
+    .health-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: $status-success;
+      box-shadow: 0 0 6px $status-success;
+
+      &.warning { background: $status-warning; box-shadow: 0 0 6px $status-warning; }
+      &.danger  { background: $status-danger;  box-shadow: 0 0 6px $status-danger; }
+    }
+
+    @include max-md { display: none; }
+  }
+
+  // Notification bell
+  .notif-btn {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    @include flex-center;
+    background: $bg-elevated;
+    border: 1px solid $border-default;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: $transition-fast;
+    &:hover { color: $text-primary; border-color: $border-active; }
+
+    .notif-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 16px;
+      height: 16px;
+      background: $brand-red;
+      color: #fff;
+      font-size: 9px;
+      font-weight: $weight-bold;
+      border-radius: 50%;
+      @include flex-center;
+      border: 2px solid $bg-primary;
+    }
+  }
+
+  // Lang selector
+  .lang-selector {
+    padding: $space-2 $space-3;
+    background: $bg-elevated;
+    border: 1px solid $border-default;
+    border-radius: $radius-md;
+    color: $text-secondary;
+    font-size: $font-xs;
+    font-weight: $weight-medium;
+    cursor: pointer;
+    transition: $transition-fast;
+    outline: none;
+    &:hover { color: $text-primary; border-color: $border-active; }
+    option { background: $bg-elevated; }
+  }
+}

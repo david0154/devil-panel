@@ -1,0 +1,210 @@
+// ============================================
+// Devil Panel — Global SCSS Entry Point
+// ============================================
+@import 'variables';
+@import 'mixins';
+@import 'animations';
+@import 'layout';
+@import 'components';
+@import 'sidebar';
+@import 'topbar';
+
+// ---- Reset & Base ----
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: $bg-primary;
+  color: $text-primary;
+  font-family: $font-primary;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @include custom-scrollbar;
+}
+
+a {
+  color: $brand-red;
+  text-decoration: none;
+  transition: $transition-fast;
+  &:hover { color: $brand-red-light; }
+}
+
+img, video { max-width: 100%; display: block; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $weight-semibold;
+  line-height: 1.3;
+  color: $text-primary;
+}
+
+p { line-height: 1.6; color: $text-secondary; }
+
+code, pre {
+  font-family: $font-mono;
+  font-size: $font-xs;
+}
+
+pre {
+  background: $bg-elevated;
+  border: 1px solid $border-default;
+  border-radius: $radius-md;
+  padding: $space-4;
+  overflow-x: auto;
+  @include custom-scrollbar;
+}
+
+// ---- Selection ----
+::selection {
+  background: rgba(255,45,45,0.25);
+  color: $text-primary;
+}
+
+// ---- Focus Styles ----
+:focus-visible {
+  outline: 2px solid $brand-red;
+  outline-offset: 2px;
+}
+
+// ---- Utility Classes ----
+.text-red     { color: $brand-red !important; }
+.text-success { color: $status-success !important; }
+.text-warning { color: $status-warning !important; }
+.text-danger  { color: $status-danger !important; }
+.text-info    { color: $status-info !important; }
+.text-muted   { color: $text-muted !important; }
+.text-primary { color: $text-primary !important; }
+.text-secondary { color: $text-secondary !important; }
+
+.font-mono { font-family: $font-mono !important; }
+.font-bold  { font-weight: $weight-bold !important; }
+
+.mt-0 { margin-top: 0 !important; }
+.mb-0 { margin-bottom: 0 !important; }
+.mt-4 { margin-top: $space-4 !important; }
+.mb-4 { margin-bottom: $space-4 !important; }
+.mt-8 { margin-top: $space-8 !important; }
+.mb-8 { margin-bottom: $space-8 !important; }
+
+.gap-2 { gap: $space-2; }
+.gap-4 { gap: $space-4; }
+
+.flex        { display: flex; }
+.flex-col    { @include flex-col; }
+.flex-center { @include flex-center; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+
+.w-full  { width: 100%; }
+.h-full  { height: 100%; }
+
+.truncate { @include truncate; }
+
+.rounded    { border-radius: $radius-md; }
+.rounded-lg { border-radius: $radius-lg; }
+.rounded-full { border-radius: $radius-full; }
+
+.opacity-0   { opacity: 0; }
+.opacity-50  { opacity: 0.5; }
+.opacity-100 { opacity: 1; }
+
+.pointer { cursor: pointer; }
+
+.divider {
+  height: 1px;
+  background: $border-subtle;
+  margin: $space-4 0;
+}
+
+.overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: $gradient-glow;
+  pointer-events: none;
+}
+
+// ---- Glow Background Orbs ----
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+
+  &-1 {
+    width: 400px;
+    height: 400px;
+    background: $brand-red;
+    top: -100px;
+    right: -100px;
+  }
+
+  &-2 {
+    width: 300px;
+    height: 300px;
+    background: $brand-red-dark;
+    bottom: 100px;
+    left: 30%;
+  }
+}
+
+// ---- Login Page ----
+.login-page {
+  min-height: 100vh;
+  background: $bg-primary;
+  @include flex-center;
+  position: relative;
+  overflow: hidden;
+
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: $space-10;
+    @include glass-card;
+    position: relative;
+    z-index: 1;
+    animation: scaleIn 0.35s ease;
+    border-color: $border-active;
+
+    .login-logo {
+      @include flex-center;
+      flex-direction: column;
+      gap: $space-3;
+      margin-bottom: $space-8;
+
+      .logo-icon {
+        width: 56px;
+        height: 56px;
+        background: $gradient-red;
+        border-radius: $radius-xl;
+        @include flex-center;
+        font-size: 1.5rem;
+        font-weight: $weight-extrabold;
+        color: #fff;
+        @include neon-glow;
+      }
+
+      h1 {
+        font-size: $font-2xl;
+        font-weight: $weight-extrabold;
+        color: $text-primary;
+        letter-spacing: -0.03em;
+      }
+
+      p {
+        font-size: $font-sm;
+        color: $text-muted;
+        text-align: center;
+      }
+    }
+  }
+}

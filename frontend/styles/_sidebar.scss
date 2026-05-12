@@ -1,0 +1,220 @@
+// ============================================
+// Devil Panel — Sidebar Navigation
+// ============================================
+@import 'variables';
+@import 'mixins';
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: $sidebar-width;
+  background: $sidebar-bg;
+  border-right: 1px solid $border-default;
+  @include flex-col;
+  z-index: $z-sticky;
+  transition: width 0.3s ease;
+  @include custom-scrollbar;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &.collapsed {
+    width: $sidebar-collapsed;
+
+    .nav-label, .logo-text, .sidebar-footer-text,
+    .nav-badge, .nav-section-title { display: none; }
+
+    .nav-item { justify-content: center; padding: $space-3; }
+    .nav-icon  { margin: 0; }
+  }
+
+  @include max-md {
+    transform: translateX(-100%);
+    width: $sidebar-width !important;
+    &.open { transform: translateX(0); }
+  }
+}
+
+// Logo
+.sidebar-logo {
+  @include flex-between;
+  padding: $space-5 $space-5;
+  border-bottom: 1px solid $border-subtle;
+  min-height: 72px;
+  flex-shrink: 0;
+
+  .logo-brand {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    text-decoration: none;
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: $gradient-red;
+      border-radius: $radius-md;
+      @include flex-center;
+      font-size: 1rem;
+      font-weight: $weight-extrabold;
+      color: #fff;
+      flex-shrink: 0;
+      @include neon-glow;
+    }
+
+    .logo-text {
+      @include flex-col;
+      .name {
+        font-size: $font-sm;
+        font-weight: $weight-bold;
+        color: $text-primary;
+        letter-spacing: -0.02em;
+      }
+      .tagline {
+        font-size: 10px;
+        color: $text-muted;
+        font-weight: $weight-medium;
+      }
+    }
+  }
+
+  .sidebar-toggle {
+    width: 28px;
+    height: 28px;
+    @include flex-center;
+    background: transparent;
+    border: none;
+    color: $text-muted;
+    cursor: pointer;
+    border-radius: $radius-sm;
+    font-size: 0.9rem;
+    transition: $transition-fast;
+    &:hover { color: $text-primary; background: $bg-hover; }
+    flex-shrink: 0;
+  }
+}
+
+// Nav sections
+.nav-section {
+  margin: $space-4 0 $space-2;
+  padding: 0 $space-3;
+
+  &-title {
+    font-size: 10px;
+    font-weight: $weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $text-muted;
+    padding: 0 $space-3 $space-2;
+  }
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 $space-3;
+}
+
+// Nav items
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-3;
+  border-radius: $radius-md;
+  text-decoration: none;
+  color: $text-secondary;
+  font-size: $font-sm;
+  font-weight: $weight-medium;
+  cursor: pointer;
+  transition: $transition-fast;
+  margin-bottom: 2px;
+  position: relative;
+  white-space: nowrap;
+
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    @include flex-center;
+    flex-shrink: 0;
+    font-size: 1rem;
+    transition: $transition-fast;
+  }
+
+  .nav-label { flex: 1; }
+
+  .nav-badge {
+    font-size: 10px;
+    font-weight: $weight-bold;
+    background: $brand-red;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: $radius-full;
+    min-width: 18px;
+    text-align: center;
+  }
+
+  &:hover {
+    background: $bg-hover;
+    color: $text-primary;
+    .nav-icon { color: $brand-red; }
+  }
+
+  &.active {
+    background: $brand-red-dim;
+    color: $brand-red;
+    font-weight: $weight-semibold;
+    border: 1px solid $brand-red-glow;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 3px;
+      background: $brand-red;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .nav-icon { color: $brand-red; }
+  }
+}
+
+// Sidebar footer
+.sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid $border-subtle;
+  padding: $space-4;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-3;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: $transition-fast;
+    &:hover { background: $bg-hover; }
+  }
+
+  .user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: $radius-full;
+    background: $gradient-red;
+    @include flex-center;
+    font-size: $font-sm;
+    font-weight: $weight-bold;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .user-details {
+    flex: 1;
+    min-width: 0;
+    .user-name  { font-size: $font-xs; font-weight: $weight-semibold; color: $text-primary; @include truncate; }
+    .user-role  { font-size: 10px; color: $text-muted; @include truncate; }
+  }
+}

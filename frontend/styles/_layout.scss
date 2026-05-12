@@ -1,0 +1,153 @@
+// ============================================
+// Devil Panel — Layout Styles
+// ============================================
+@import 'variables';
+@import 'mixins';
+
+// ---- Main Layout ----
+.dp-layout {
+  display: flex;
+  min-height: 100vh;
+  background: $bg-primary;
+  color: $text-primary;
+  font-family: $font-primary;
+}
+
+.dp-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-left: $sidebar-width;
+  transition: margin-left 0.3s ease;
+
+  &.sidebar-collapsed { margin-left: $sidebar-collapsed; }
+
+  @include max-md {
+    margin-left: 0;
+  }
+}
+
+.dp-content {
+  flex: 1;
+  padding: $space-8;
+  @include custom-scrollbar;
+
+  @include max-md {
+    padding: $space-4;
+  }
+}
+
+// ---- Page Header ----
+.page-header {
+  @include flex-between;
+  margin-bottom: $space-8;
+
+  .page-title {
+    h1 {
+      font-size: $font-2xl;
+      font-weight: $weight-bold;
+      color: $text-primary;
+      margin: 0 0 $space-1;
+      line-height: 1.2;
+    }
+    p {
+      font-size: $font-sm;
+      color: $text-secondary;
+      margin: 0;
+    }
+  }
+
+  .page-actions {
+    display: flex;
+    gap: $space-3;
+    align-items: center;
+  }
+}
+
+// ---- Stats Grid ----
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: $space-4;
+  margin-bottom: $space-8;
+}
+
+.stat-card {
+  @include glass-card;
+  padding: $space-5 $space-6;
+  @include card-hover;
+  animation: fadeIn 0.4s ease both;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: $gradient-red;
+    opacity: 0;
+    transition: $transition-base;
+  }
+
+  &:hover::before { opacity: 1; }
+
+  .stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: $radius-lg;
+    @include flex-center;
+    font-size: 1.25rem;
+    margin-bottom: $space-4;
+    background: $brand-red-dim;
+    border: 1px solid $brand-red-glow;
+    color: $brand-red;
+  }
+
+  .stat-value {
+    font-size: $font-2xl;
+    font-weight: $weight-bold;
+    color: $text-primary;
+    line-height: 1;
+    margin-bottom: $space-1;
+    animation: number-count 0.5s ease both;
+  }
+
+  .stat-label {
+    font-size: $font-xs;
+    color: $text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: $weight-semibold;
+  }
+
+  .stat-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: $font-xs;
+    margin-top: $space-2;
+    font-weight: $weight-semibold;
+
+    &.positive { color: $status-success; }
+    &.negative { color: $status-danger; }
+  }
+}
+
+// ---- Content Grid ----
+.content-grid {
+  display: grid;
+  gap: $space-6;
+
+  &.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  &.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  &.cols-auto { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+  &.sidebar-layout { grid-template-columns: 1fr 340px; }
+
+  @include max-md {
+    grid-template-columns: 1fr !important;
+  }
+}
