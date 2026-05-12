@@ -93,6 +93,59 @@ Access panel at: `https://your-server-ip:8443`
 
 ---
 
+
+## 🧱 Part-by-Part Development Plan (GitHub)
+
+To build safely in milestones, push in this order:
+
+1. **foundation/phase-1-core**: auth, users, domains, SSL, file manager skeleton.
+2. **foundation/phase-2-vps**: VPS lifecycle, Docker orchestration, snapshots.
+3. **foundation/phase-3-cloud-ai**: clustering primitives, AI assistant service integration.
+4. **foundation/phase-4-enterprise**: multi-region DNS, CDN hooks, Kubernetes adapters.
+
+Recommended workflow:
+
+```bash
+git checkout -b foundation/phase-1-core
+git add .
+git commit -m "feat: scaffold phase 1 core panel"
+git push -u origin foundation/phase-1-core
+```
+
+---
+
+## 🤖 Lightweight Open-Source AI Models (Download URLs)
+
+- TinyLlama 1.1B (GGUF/HF): https://huggingface.co/TinyLlama
+- Phi-3 Mini: https://huggingface.co/microsoft/Phi-3-mini-4k-instruct
+- Qwen2 0.5B: https://huggingface.co/Qwen/Qwen2-0.5B-Instruct
+- Ollama model library (easy pull): https://ollama.com/library
+
+Example:
+
+```bash
+ollama pull tinyllama
+ollama pull phi3:mini
+ollama pull qwen2:0.5b
+```
+
+---
+
+## 🧰 Installation Modes
+
+### 1) Docker (recommended for fastest setup)
+Use `installer/install.sh`.
+
+### 2) Native install without Docker (CyberPanel-like host install)
+Use:
+
+```bash
+sudo bash installer/install-native.sh
+```
+
+This bootstrap installs host-level dependencies (NGINX, PostgreSQL, Redis, RabbitMQ) and prepares `/opt/devilpanel` for direct service deployment.
+
+---
 ## 🖥️ System Requirements
 
 ### Minimum
