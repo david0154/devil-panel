@@ -1,119 +1,63 @@
-// ============================================
-// Devil Panel — SCSS Variables
-// Neon Red + Black Futuristic Theme
-// ============================================
+// ===== DEVIL PANEL — Design Tokens =====
 
 // Brand Colors
-$brand-red:       #ff2d2d;
-$brand-red-dark:  #cc0000;
-$brand-red-light: #ff6b6b;
-$brand-red-glow:  rgba(255, 45, 45, 0.3);
-$brand-red-dim:   rgba(255, 45, 45, 0.1);
+$accent-red:       #e63946;
+$accent-red-dark:  #c1121f;
+$accent-red-light: #ff6b6b;
 
-// Dark Theme Backgrounds
+// Backgrounds
 $bg-primary:   #0a0a0f;
-$bg-secondary: #0f0f1a;
-$bg-card:      #12121f;
-$bg-elevated:  #1a1a2e;
-$bg-hover:     #1e1e35;
-$bg-active:    #252540;
-$bg-overlay:   rgba(10, 10, 15, 0.95);
+$bg-secondary: #111118;
+$bg-card:      #13131a;
+$bg-input:     #1a1a24;
+$bg-hover:     #1e1e2a;
 
-// Sidebar
-$sidebar-bg:     #0d0d18;
-$sidebar-width:  260px;
-$sidebar-collapsed: 72px;
+// Borders
+$border-color: #1e1e2e;
+$border-light: #252535;
 
-// Border Colors
-$border-default: rgba(255, 255, 255, 0.06);
-$border-active:  rgba(255, 45, 45, 0.4);
-$border-subtle:  rgba(255, 255, 255, 0.03);
+// Text
+$text-primary:   #f0f0f5;
+$text-secondary: #8888a8;
+$text-muted:     #555570;
 
-// Text Colors
-$text-primary:   #f0f0f8;
-$text-secondary: #9999b8;
-$text-muted:     #555577;
-$text-red:       #ff2d2d;
-$text-white:     #ffffff;
-
-// Status Colors
-$status-success: #00e676;
-$status-warning: #ffab00;
-$status-danger:  #ff2d2d;
-$status-info:    #40c4ff;
-$status-purple:  #e040fb;
-
-// Gradients
-$gradient-red:    linear-gradient(135deg, #ff2d2d 0%, #cc0000 100%);
-$gradient-dark:   linear-gradient(180deg, #12121f 0%, #0a0a0f 100%);
-$gradient-card:   linear-gradient(145deg, #1a1a2e 0%, #12121f 100%);
-$gradient-glow:   radial-gradient(circle at center, rgba(255,45,45,0.15) 0%, transparent 70%);
-
-// Typography
-$font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-$font-mono:    'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-
-$font-xs:   0.75rem;   // 12px
-$font-sm:   0.875rem;  // 14px
-$font-base: 1rem;      // 16px
-$font-md:   1.125rem;  // 18px
-$font-lg:   1.25rem;   // 20px
-$font-xl:   1.5rem;    // 24px
-$font-2xl:  1.875rem;  // 30px
-$font-3xl:  2.25rem;   // 36px
-$font-4xl:  3rem;      // 48px
-
-$weight-normal:   400;
-$weight-medium:   500;
-$weight-semibold: 600;
-$weight-bold:     700;
-$weight-extrabold:800;
-
-// Spacing
-$space-1:  0.25rem;
-$space-2:  0.5rem;
-$space-3:  0.75rem;
-$space-4:  1rem;
-$space-5:  1.25rem;
-$space-6:  1.5rem;
-$space-8:  2rem;
-$space-10: 2.5rem;
-$space-12: 3rem;
-$space-16: 4rem;
-$space-20: 5rem;
-
-// Border Radius
-$radius-sm:   4px;
-$radius-md:   8px;
-$radius-lg:   12px;
-$radius-xl:   16px;
-$radius-2xl:  20px;
-$radius-full: 9999px;
+// Status
+$success: #2dd4bf;
+$danger:  #f87171;
+$warning: #fbbf24;
+$info:    #60a5fa;
 
 // Shadows
-$shadow-sm:    0 1px 3px rgba(0,0,0,0.4);
-$shadow-md:    0 4px 16px rgba(0,0,0,0.5);
-$shadow-lg:    0 8px 32px rgba(0,0,0,0.6);
-$shadow-red:   0 0 20px rgba(255,45,45,0.3), 0 0 40px rgba(255,45,45,0.1);
-$shadow-glow:  0 0 30px rgba(255,45,45,0.2);
+$shadow-sm:  0 1px 3px rgba(0,0,0,0.4);
+$shadow-md:  0 4px 12px rgba(0,0,0,0.5);
+$shadow-lg:  0 8px 32px rgba(0,0,0,0.6);
+$shadow-red: 0 4px 20px rgba(230,57,70,0.3);
 
-// Transitions
-$transition-fast:   all 0.15s ease;
-$transition-base:   all 0.25s ease;
-$transition-slow:   all 0.4s ease;
-$transition-spring: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+// Typography
+$font-primary: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-mono:    'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 
-// Z-Index Layers
-$z-dropdown:  100;
-$z-sticky:    200;
-$z-overlay:   300;
-$z-modal:     400;
-$z-toast:     500;
-$z-tooltip:   600;
+// Radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-2xl: 24px;
 
-// Breakpoints
-$bp-sm:  640px;
-$bp-md:  768px;
-$bp-lg:  1024px;
-$bp-xl:  1280px;
-$bp-2xl: 1536px;
+// Spacing scale
+$space-xs: 0.25rem;
+$space-sm: 0.5rem;
+$space-md: 1rem;
+$space-lg: 1.5rem;
+$space-xl: 2rem;
+$space-2xl: 3rem;
+
+// Sidebar
+$sidebar-width: 260px;
+$sidebar-collapsed: 72px;
+
+// Z-index
+$z-sidebar:  100;
+$z-header:   200;
+$z-modal:    1000;
+$z-toast:    2000;

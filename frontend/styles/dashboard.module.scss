@@ -1,0 +1,109 @@
+@import 'variables';
+@import 'mixins';
+
+.dashboard {}
+
+.statsGrid {
+  @include grid(4, 1.25rem);
+  margin-bottom: 2rem;
+  @include responsive('xl') { grid-template-columns: repeat(2, 1fr); }
+  @include responsive('sm') { grid-template-columns: 1fr; }
+}
+
+.statCard {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  @include card-hover;
+
+  .icon {
+    width: 44px; height: 44px; border-radius: $radius-md;
+    @include flex(row, center, center);
+    font-size: 1.3rem; margin-bottom: 1rem;
+  }
+
+  .value { font-size: 2rem; font-weight: 800; line-height: 1; }
+  .label { color: $text-secondary; font-size: 0.82rem; margin-top: 0.3rem; }
+  .trend { font-size: 0.78rem; margin-top: 0.5rem;
+    &.up { color: $success; } &.down { color: $danger; } }
+
+  &.red .icon    { background: rgba($accent-red, 0.15); color: $accent-red; }
+  &.green .icon  { background: rgba($success, 0.15);    color: $success; }
+  &.blue .icon   { background: rgba($info, 0.15);       color: $info; }
+  &.yellow .icon { background: rgba($warning, 0.15);    color: $warning; }
+}
+
+.chartsRow {
+  @include grid(2, 1.25rem);
+  margin-bottom: 2rem;
+  @include responsive('lg') { grid-template-columns: 1fr; }
+}
+
+.chartCard {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: 1.5rem;
+
+  .chartTitle {
+    @include flex(row, center, space-between);
+    margin-bottom: 1.25rem;
+    h3 { font-size: 1rem; font-weight: 700; }
+    span { font-size: 0.8rem; color: $text-muted; }
+  }
+}
+
+.bottomRow {
+  @include grid(3, 1.25rem);
+  @include responsive('xl') { grid-template-columns: repeat(2, 1fr); }
+  @include responsive('lg') { grid-template-columns: 1fr; }
+}
+
+.activityFeed {
+  background: $bg-card; border: 1px solid $border-color; border-radius: $radius-lg; padding: 1.5rem;
+  .feedTitle { font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; }
+  .feedItem {
+    @include flex(row, flex-start, flex-start, 0.75rem);
+    padding: 0.75rem 0; border-bottom: 1px solid $border-color;
+    &:last-child { border-bottom: none; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+    .text { font-size: 0.85rem; color: $text-secondary; line-height: 1.5;
+      strong { color: $text-primary; } }
+    .time { font-size: 0.75rem; color: $text-muted; margin-top: 2px; }
+  }
+}
+
+.serverStatus {
+  background: $bg-card; border: 1px solid $border-color; border-radius: $radius-lg; padding: 1.5rem;
+  .title { font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; }
+  .serverItem {
+    @include flex(row, center, space-between);
+    padding: 0.65rem 0; border-bottom: 1px solid $border-color;
+    &:last-child { border-bottom: none; }
+    .name { font-size: 0.875rem; font-weight: 500; }
+    .ip   { font-size: 0.78rem; color: $text-muted; font-family: $font-mono; }
+    .statusDot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+      &.online  { background: $success; animation: pulse 2s infinite; }
+      &.offline { background: $danger; }
+      &.warning { background: $warning; }
+    }
+  }
+}
+
+.quickActions {
+  background: $bg-card; border: 1px solid $border-color; border-radius: $radius-lg; padding: 1.5rem;
+  .title { font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; }
+  .actions { @include grid(2, 0.75rem); }
+  .actionBtn {
+    @include flex(column, center, center, 0.4rem);
+    background: $bg-secondary; border: 1px solid $border-color;
+    border-radius: $radius-md; padding: 1rem 0.5rem;
+    cursor: pointer; transition: all 0.2s; color: $text-secondary;
+    font-size: 0.78rem; text-align: center;
+    .icon { font-size: 1.4rem; }
+    &:hover { border-color: $accent-red; color: $accent-red; background: rgba($accent-red, 0.05); }
+  }
+}

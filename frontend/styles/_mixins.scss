@@ -1,177 +1,53 @@
-// ============================================
-// Devil Panel — SCSS Mixins
-// ============================================
 @import 'variables';
 
-// Responsive Breakpoints
-@mixin sm { @media (min-width: #{$bp-sm}) { @content; } }
-@mixin md { @media (min-width: #{$bp-md}) { @content; } }
-@mixin lg { @media (min-width: #{$bp-lg}) { @content; } }
-@mixin xl { @media (min-width: #{$bp-xl}) { @content; } }
-@mixin max-sm { @media (max-width: #{$bp-sm}) { @content; } }
-@mixin max-md { @media (max-width: #{$bp-md}) { @content; } }
-
-// Flex helpers
-@mixin flex-center {
+@mixin flex($dir: row, $align: center, $justify: flex-start, $gap: 0) {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-@mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-@mixin flex-col {
-  display: flex;
-  flex-direction: column;
+  flex-direction: $dir;
+  align-items: $align;
+  justify-content: $justify;
+  @if $gap != 0 { gap: $gap; }
 }
 
-// Glass morphism card
-@mixin glass-card {
-  background: $bg-card;
-  border: 1px solid $border-default;
-  border-radius: $radius-xl;
+@mixin grid($cols: 1, $gap: 1rem) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gap;
+}
+
+@mixin glass {
+  background: rgba($bg-card, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
-// Neon glow effect
-@mixin neon-glow($color: $brand-red) {
-  box-shadow: 0 0 10px rgba($color, 0.4),
-              0 0 20px rgba($color, 0.2),
-              0 0 40px rgba($color, 0.1);
+@mixin neon-glow($color: $accent-red, $size: 8px) {
+  box-shadow: 0 0 $size rgba($color, 0.4), 0 0 ($size * 2) rgba($color, 0.2);
 }
 
-// Red gradient button
-@mixin btn-primary {
-  background: $gradient-red;
-  color: #fff;
-  border: none;
-  border-radius: $radius-md;
-  padding: $space-3 $space-6;
-  font-weight: $weight-semibold;
-  font-size: $font-sm;
-  cursor: pointer;
-  transition: $transition-base;
-  position: relative;
-  overflow: hidden;
+@mixin truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.1);
-    opacity: 0;
-    transition: $transition-fast;
-  }
-
-  &:hover {
-    transform: translateY(-1px);
-    @include neon-glow;
-    &::before { opacity: 1; }
-  }
-
-  &:active { transform: translateY(0); }
-  &:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+@mixin responsive($bp) {
+  @if $bp == 'sm'  { @media (max-width: 640px)  { @content; } }
+  @if $bp == 'md'  { @media (max-width: 768px)  { @content; } }
+  @if $bp == 'lg'  { @media (max-width: 1024px) { @content; } }
+  @if $bp == 'xl'  { @media (max-width: 1280px) { @content; } }
 }
 
-// Ghost button
-@mixin btn-ghost {
-  background: transparent;
-  color: $text-secondary;
-  border: 1px solid $border-default;
-  border-radius: $radius-md;
-  padding: $space-3 $space-6;
-  font-weight: $weight-medium;
-  font-size: $font-sm;
-  cursor: pointer;
-  transition: $transition-base;
-
-  &:hover {
-    color: $text-primary;
-    border-color: $border-active;
-    background: $brand-red-dim;
-  }
-}
-
-// Status badge
-@mixin status-badge($color) {
-  display: inline-flex;
-  align-items: center;
-  gap: $space-1;
-  padding: 2px $space-2;
-  border-radius: $radius-full;
-  font-size: $font-xs;
-  font-weight: $weight-semibold;
-  background: rgba($color, 0.12);
-  color: $color;
-  border: 1px solid rgba($color, 0.25);
-
-  &::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: $color;
-    box-shadow: 0 0 6px $color;
-  }
-}
-
-// Input style
-@mixin input-style {
-  width: 100%;
-  background: $bg-elevated;
-  border: 1px solid $border-default;
-  border-radius: $radius-md;
-  padding: $space-3 $space-4;
-  color: $text-primary;
-  font-size: $font-sm;
-  font-family: $font-primary;
-  transition: $transition-fast;
-  outline: none;
-
-  &::placeholder { color: $text-muted; }
-
-  &:focus {
-    border-color: $border-active;
-    background: $bg-hover;
-    box-shadow: 0 0 0 3px $brand-red-dim;
-  }
-}
-
-// Scrollbar
-@mixin custom-scrollbar {
-  &::-webkit-scrollbar { width: 4px; height: 4px; }
-  &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(255,45,45,0.3);
-    border-radius: $radius-full;
-    &:hover { background: rgba(255,45,45,0.5); }
-  }
-}
-
-// Truncate text
-@mixin truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-// Skeleton loading
-@mixin skeleton {
-  background: linear-gradient(90deg, $bg-elevated 25%, $bg-hover 50%, $bg-elevated 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite;
-  border-radius: $radius-md;
-}
-
-// Card hover lift
 @mixin card-hover {
-  transition: $transition-base;
-  &:hover {
-    transform: translateY(-2px);
-    border-color: $border-active;
-    box-shadow: $shadow-red;
-  }
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  &:hover { transform: translateY(-2px); border-color: $accent-red; @include neon-glow; }
 }
+
+@mixin status-dot($color) {
+  &::before { content: ''; display: inline-block; width: 8px; height: 8px;
+    background: $color; border-radius: 50%; margin-right: 6px;
+    animation: pulse 2s infinite; }
+}
+
+@mixin skeleton {
+  background: linear-gradient(90deg, $bg-secondary 25%, $bg-hover 50%, $bg-secondary 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
