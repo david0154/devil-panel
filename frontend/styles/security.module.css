@@ -1,0 +1,64 @@
+/* Security Module CSS */
+
+.securityScore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.scoreRing { position: relative; width: 120px; height: 120px; }
+.scoreRing svg { transform: rotate(-90deg); }
+.scoreBg { fill: none; stroke: var(--color-surface-3); stroke-width: 8; }
+.scoreFill { fill: none; stroke: var(--color-success); stroke-width: 8; stroke-linecap: round; stroke-dasharray: 339; stroke-dashoffset: var(--score-offset, 80); transition: stroke-dashoffset 1.2s var(--ease); }
+.scoreLabel { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.scoreNum { font-size: 28px; font-weight: 800; color: var(--color-text); }
+.scoreText { font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+.threatFeed { display: flex; flex-direction: column; }
+
+.threatItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.threatItem:last-child { border-bottom: none; }
+
+.threatSeverity { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.threatSeverity.critical { background: var(--color-error); box-shadow: 0 0 8px var(--color-error); }
+.threatSeverity.high     { background: var(--color-warning); }
+.threatSeverity.medium   { background: var(--color-info); }
+.threatSeverity.low      { background: var(--color-success); }
+
+.threatIp { font-family: var(--font-mono); font-size: 12px; color: var(--color-text); width: 130px; flex-shrink: 0; }
+.threatDesc { flex: 1; font-size: var(--text-sm); color: var(--color-text-muted); }
+.threatTime { font-size: 11px; color: var(--color-text-faint); white-space: nowrap; }
+
+.firewallRuleRow { display: flex; align-items: center; gap: var(--space-3); }
+
+.rulePort { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--color-text); }
+.ruleProto { font-size: 11px; color: var(--color-text-faint); }
+
+.blockList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.blockItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-error-dim);
+  border: 1px solid rgba(239,68,68,0.15);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-error);
+}

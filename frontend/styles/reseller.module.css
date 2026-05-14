@@ -1,0 +1,77 @@
+/* Reseller / WHM-Style Module CSS */
+
+.resellerHeader {
+  background: linear-gradient(135deg, var(--color-surface-2), var(--color-surface));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.resellerLogo {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-xl);
+  background: var(--color-brand-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-brand);
+  font-size: 24px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.resellerName { font-size: var(--text-lg); font-weight: 700; color: var(--color-text); }
+.resellerPlan { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: 2px; }
+
+.resellerStats {
+  display: flex;
+  gap: var(--space-8);
+  margin-left: auto;
+}
+
+.resellerStat { text-align: center; }
+.resellerStatVal { font-size: var(--text-lg); font-weight: 700; color: var(--color-text); font-variant-numeric: tabular-nums; }
+.resellerStatLabel { font-size: 11px; color: var(--color-text-muted); }
+
+.clientCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  transition: all var(--trans);
+}
+.clientCard:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-md); }
+
+.packageGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-4); }
+
+.packageCard {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+}
+
+.whiteLabelPreview {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.whiteLabelHeader {
+  background: var(--color-surface-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.brandColorPicker { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.colorSwatch { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; transition: transform var(--trans); border: 2px solid transparent; }
+.colorSwatch.active { transform: scale(1.15); border-color: white; }

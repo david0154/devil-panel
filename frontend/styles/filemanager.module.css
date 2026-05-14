@@ -1,0 +1,165 @@
+/* File Manager Module CSS */
+
+.fileManagerShell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  height: calc(100vh - var(--topbar-height) - var(--space-12));
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.sidebar {
+  background: var(--color-surface-2);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--trans);
+}
+
+.sidebarItem:hover { background: var(--color-surface-3); color: var(--color-text); }
+.sidebarItem.active { background: var(--color-brand-dim); color: var(--color-brand); }
+
+.mainArea {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+  flex-wrap: wrap;
+}
+
+.pathBar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.pathSep { color: var(--color-text-faint); }
+.pathPart { cursor: pointer; color: var(--color-text-muted); transition: color var(--trans); }
+.pathPart:hover { color: var(--color-brand); }
+.pathPart.current { color: var(--color-text); font-weight: 600; }
+
+.fileArea {
+  flex: 1;
+  overflow: auto;
+  padding: var(--space-4);
+}
+
+.viewToggle {
+  display: flex;
+  gap: 2px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2px;
+}
+
+.viewBtn {
+  padding: var(--space-1) var(--space-2);
+  border-radius: calc(var(--radius-md) - 2px);
+  color: var(--color-text-muted);
+  transition: all var(--trans);
+}
+
+.viewBtn.active { background: var(--color-surface-3); color: var(--color-text); }
+
+.listView {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--trans);
+}
+
+.listItem:hover { background: var(--color-surface-2); }
+.listItem.selected { background: var(--color-brand-dim); }
+
+.listIcon { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
+.listName { flex: 1; font-size: var(--text-sm); color: var(--color-text); }
+.listSize { font-size: 11px; color: var(--color-text-faint); font-family: var(--font-mono); }
+.listDate { font-size: 11px; color: var(--color-text-faint); }
+.listPerm { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-faint); }
+
+.contextMenu {
+  position: fixed;
+  background: var(--color-surface-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+  min-width: 180px;
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+}
+
+.contextMenuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--trans);
+}
+
+.contextMenuItem:hover { background: var(--color-surface-offset); color: var(--color-text); }
+.contextMenuItem.danger { color: var(--color-error); }
+.contextMenuItem.danger:hover { background: var(--color-error-dim); }
+
+.dropZone {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12);
+  text-align: center;
+  color: var(--color-text-faint);
+  transition: all var(--trans);
+}
+
+.dropZone.dragOver {
+  border-color: var(--color-brand);
+  background: var(--color-brand-dim);
+  color: var(--color-brand);
+}

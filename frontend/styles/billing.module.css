@@ -1,0 +1,55 @@
+/* Billing Module CSS */
+
+.plansGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.planFeatures { display: flex; flex-direction: column; gap: var(--space-2); margin: var(--space-4) 0; }
+.planFeature {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.invoiceRow td:first-child { font-family: var(--font-mono); font-size: 12px; }
+
+.paymentGateways {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+}
+
+.gatewayBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--trans);
+}
+
+.gatewayBtn:hover {
+  border-color: var(--color-brand);
+  background: var(--color-brand-dim);
+}
+
+.usageMeter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.usageRow { display: flex; flex-direction: column; gap: var(--space-1); }
+.usageLabel { display: flex; justify-content: space-between; font-size: var(--text-sm); color: var(--color-text-muted); }

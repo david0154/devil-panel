@@ -1,0 +1,90 @@
+/* Dashboard Page Module CSS */
+
+.activityFeed { display: flex; flex-direction: column; }
+
+.activityItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-divider);
+  transition: background var(--trans);
+}
+
+.activityItem:last-child { border-bottom: none; }
+.activityItem:hover { background: var(--color-surface-2); }
+
+.activityDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-brand);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.activityDot.warning { background: var(--color-warning); }
+.activityDot.success { background: var(--color-success); }
+.activityDot.info    { background: var(--color-info); }
+
+.activityContent { flex: 1; }
+.activityTitle { font-size: var(--text-sm); color: var(--color-text); font-weight: 500; }
+.activityTime  { font-size: 11px; color: var(--color-text-faint); margin-top: 2px; }
+
+.quickActionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.quickAction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition: all var(--trans);
+  cursor: pointer;
+  text-align: center;
+}
+
+.quickAction:hover {
+  border-color: var(--color-brand);
+  background: var(--color-brand-dim);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.quickActionIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-brand);
+}
+
+.quickActionLabel { font-size: 12px; font-weight: 600; color: var(--color-text-muted); }
+
+.serverHealthRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.resourceRings {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.resourceRing { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+.resourceRingLabel { font-size: 11px; color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }

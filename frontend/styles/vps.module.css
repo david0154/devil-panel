@@ -1,0 +1,86 @@
+/* VPS Management Module CSS */
+
+.vpsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+.vpsCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--trans);
+}
+
+.vpsCard:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-md); }
+
+.vpsCardHeader {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-divider);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vpsName { font-weight: 700; font-size: var(--text-base); color: var(--color-text); }
+.vpsIp { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-faint); margin-top: 2px; }
+
+.vpsMetrics {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.metricRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.metricName { font-size: 11px; color: var(--color-text-muted); width: 40px; flex-shrink: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.vpsActions {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-divider);
+  display: flex;
+  gap: var(--space-2);
+}
+
+.consoleWrap {
+  background: #050507;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-height: 300px;
+}
+
+.consoleToolbar {
+  background: var(--color-surface-2);
+  padding: var(--space-2) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.consoleBody {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: var(--space-4);
+  color: #c8e6c9;
+  line-height: 1.8;
+  min-height: 300px;
+  overflow-y: auto;
+}
+
+.specTable { width: 100%; }
+.specRow { display: flex; justify-content: space-between; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-divider); }
+.specRow:last-child { border-bottom: none; }
+.specKey { font-size: var(--text-sm); color: var(--color-text-muted); }
+.specVal { font-size: var(--text-sm); font-weight: 600; color: var(--color-text); font-family: var(--font-mono); }
+
+.isoList { display: flex; flex-direction: column; gap: var(--space-2); }
+.isoItem { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }

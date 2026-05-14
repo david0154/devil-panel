@@ -1,0 +1,31 @@
+/* Multi-Language / i18n Module CSS */
+
+.langGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-3);
+}
+
+.langCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: all var(--trans);
+}
+
+.langCard:hover { border-color: var(--color-border-strong); }
+.langCard.active { background: var(--color-brand-dim); border-color: rgba(255,45,45,0.3); }
+
+.langFlag { font-size: 24px; }
+.langName { font-size: var(--text-sm); font-weight: 600; color: var(--color-text); }
+.langNative { font-size: 12px; color: var(--color-text-muted); }
+.langProgress { font-size: 11px; color: var(--color-text-faint); }
+
+.translationTable td:first-child { font-family: var(--font-mono); font-size: 12px; color: var(--color-text-faint); }
+.translationTable td:last-child input { width: 100%; background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 4px 8px; font-size: 12px; }
+.translationTable td:last-child input:focus { outline: none; border-color: var(--color-brand); }
